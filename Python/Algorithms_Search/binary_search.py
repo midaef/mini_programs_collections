@@ -1,25 +1,67 @@
 
-from ezprint import p
+from ezprint import *
+import time
 
-arr = [1,2,3,4,5,6,7,8,9,10]
 
-search_value = 2
-min_value = 0
-max_value = len(arr) - 1
-sr_value = len(arr) // 2
+def search(arr, value):
+	size_arr = len(arr)
+	min_value = 0
+	max_value = size_arr - 1
+	start_time = time.time()
+	while min_value <= max_value:
+		mid_value = (min_value + max_value) // 2
 
-while min_value < max_value:
-	sr_value = (max_value +  min_value) // 2
-	sr1_value = arr[sr_value]
-	if sr1_value < search_value:
-		min_value = sr_value + 1
-	elif sr1_value > search_value:
-		max_value =  sr_value
+		if arr[mid_value] == value:
+			p('Search: ' + str(value))
+			p('Index: ' + str(mid_value))
+			p('Time work: ' + str(time.time() - start_time))
+			p('Status: find')
+			break		
+		elif arr[mid_value] < int(value):
+			min_value = mid_value + 1
+		else:
+			max_value = mid_value - 1
 	else:
-		print('Search: ' + str(search_value))
-		print('Status: Find!')
-		break
-		
-	
-else:
-	print('Status: Not find!')
+		p('Not found!')
+
+
+def bubble_sort(arr):
+	for i in range(len(arr) - 1 , 0):
+		for j in i:
+			if arr[j] > arr[j + 1]:
+				a = arr[i]
+				arr[i] = arr[j]
+				arr[j] = a
+
+
+def main():
+	arr = []
+	p('===Binary Search===')
+	p()
+	try:
+		j = int(input('Input array size: '))
+	except:
+		p('Except: Not int!')
+		exit()
+	for i in range(j):
+		try:
+			value_arr = int(input('Input ' + str(i + 1) +  ' element array: '))
+		except:
+			p('Except: Not int!')
+			exit()
+		arr.append(value_arr)
+	s = ''
+	for i in arr:
+		s += str(i) + ' '
+	p('Your array: ' + s)
+	try:	
+		value = int(input('Input value to search: '))
+	except:
+		p('Except: Not int!')
+		exit()
+	search(arr, int(value))
+
+
+if __name__ == '__main__':
+	cls()
+	main()
